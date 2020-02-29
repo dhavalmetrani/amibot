@@ -11,7 +11,9 @@ e.g. wfh remove @dhaval
 import sys
 import requests
 import lib.util as util
+import lib.slack as slack
 
+s = slack.Slack()
 
 def disaplay_wfh(current_date):
   """
@@ -58,14 +60,16 @@ def disaplay_wfh(current_date):
         dict_wfh[_] += 1
   # users_wfh.append("- {}".format(_))
 
-  print("The following members have reported wfh on `{}` so far: ".format(current_date))
-  print("```")
+  msg = "The following members have reported wfh on `{}` so far: ".format(current_date)
+  msg += "```"
   if not dict_wfh:
-    print(None)
+    msg += None
   else:
     for k, v in sorted(dict_wfh.items(), key=lambda x: x[1], reverse=True):
-      print("- {} [ {} ]".format(k, v))
-  print("```")
+      msg += "\n- {} [ {} ]".format(k, v)
+  msg += "```"
+  print(msg)
+  s.message_channel(channel="#testchannel", text=msg, link_names=True)
 
 def main():
   """
@@ -91,6 +95,7 @@ def main():
         user_to_add = sys.argv[2].lower()
         util.add_wfh(user_to_add, str(current_date))
         disaplay_wfh(current_date)
+
     elif command == "remove":
       if len(sys.argv) <= 2:
         print("Please specify a user to remove. e.g. wfh add @amithkumar")
@@ -99,6 +104,8 @@ def main():
         user_to_remove = sys.argv[2].lower()
         util.remove_wfh(user_to_remove, str(current_date))
         disaplay_wfh(current_date)
+    else:
+      print("Invalid command: {}. Please specify proper parameters. [ wfh list | add | remove ]".format(command))
 
     # user_to_add = sys.argv[1].lower()
     # # print(user_to_add)

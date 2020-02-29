@@ -28,9 +28,9 @@ COPY ./requirements.txt /${SERVICE_USER}/requirements.txt
 RUN pip install -r requirements.txt --user
 
 COPY ./bash /${SERVICE_USER}/bash
-COPY ./src /${SERVICE_USER}/src
 COPY ./external-scripts.json /${SERVICE_USER}/
 COPY ./scripts/${SERVICE_USER}.coffee /${SERVICE_USER}/scripts/
+COPY ./src /${SERVICE_USER}/src
 
 # And go
 CMD ["/bin/sh", "-c", "bin/hubot --adapter slack"]

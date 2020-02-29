@@ -3,7 +3,7 @@ import os
 from slackclient import SlackClient
 
 
-ENV_SLACK_TOKEN = "SLACK_TOKEN"
+ENV_SLACK_TOKEN = "AMIBOT_SLACK_TOKEN"
 DEFAULT_CHANNEL = "#testchannel"
 DEFAULT_MESSAGE = "Test message."
 DEFAULT_USER    = "amibot"
