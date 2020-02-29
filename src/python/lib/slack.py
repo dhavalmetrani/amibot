@@ -1,9 +1,8 @@
 import os
 
-from slackclient import SlackClient
+from slack import WebClient
 
-
-ENV_SLACK_TOKEN = "AMIBOT_SLACK_TOKEN"
+ENV_SLACK_TOKEN = "HUBOT_SLACK_TOKEN"
 DEFAULT_CHANNEL = "#testchannel"
 DEFAULT_MESSAGE = "Test message."
 DEFAULT_USER    = "amibot"
@@ -19,13 +18,17 @@ class Slack:
     if None is self._token:
       err_msg = "Could not get {} from env.".format(ENV_SLACK_TOKEN)
       raise Exception(err_msg)
-    self._sc = SlackClient(self._token)
+    self._sc = WebClient(token=self._token)
 
   def message_channel(self, channel=DEFAULT_CHANNEL, text=DEFAULT_MESSAGE, username=DEFAULT_USER, link_names=True):
     """
     Send message to specified slack channel.
     """
-    result = self._sc.api_call("chat.postMessage", channel=channel, text=text, username=username)
+    # result = self._sc.api_call("chat.postMessage", channel_id=channel_id, text=text, username=username)
+    result = self._sc.chat_postMessage(channel=channel,
+                                       text=text,
+                                       username=DEFAULT_USER,
+                                       link_names=True)
     if result[OK] == False:
       err_msg = "Error from Slack: {err}".format(err=result[ERROR])
       raise Exception(err_msg)
