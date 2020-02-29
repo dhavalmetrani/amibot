@@ -17,11 +17,11 @@ AMIBOT_SLACK_TOKEN="xoxb-xxxx"
 ## Run locally
 Run the following make command:
 ```
-make run
+make docker-run
 ```
 
 ## Stop the container
 Run the following command. It will stop all containers running locally.
 ```
-docker stop `docker container ls -q`
+docker stop `docker ps -a -q --filter="ancestor=amibot"`
 ```
