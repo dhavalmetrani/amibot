@@ -24,12 +24,14 @@ docker-login:              ## Login to docker public registry.
 docker-run:                ## Run the docker container.
 	$(MAKE) docker-build
 	$(MAKE) docker-stop
+	# @docker run -v `pwd`/src/:/amibot/src --env HUBOT_SLACK_TOKEN=${AMIBOT_SLACK_TOKEN} $(CONTAINER_NAME)
 	@docker run --env HUBOT_SLACK_TOKEN=${AMIBOT_SLACK_TOKEN} $(CONTAINER_NAME)
 	$(MAKE) docker-logs
 
 docker-run-local:          ## Run the docker container locally.
 	$(MAKE) docker-build
 	$(MAKE) docker-stop
+	# @docker run -v `pwd`/src/:/amibot/src --env HUBOT_SLACK_TOKEN=${AMIBOT_SLACK_TOKEN} $(CONTAINER_NAME)
 	@docker run --env HUBOT_SLACK_TOKEN=${AMIBOT_SLACK_TOKEN} $(CONTAINER_NAME)
 	$(MAKE) docker-logs
 
